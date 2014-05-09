@@ -121,3 +121,32 @@ func (self *SubscriptionClient) CancelAtPeriodEnd(customerId string) (*Subscript
 	err := query("DELETE", path, values, &s)
 	return &s, err
 }
+
+// Returns a list of the customer's subscriptions.
+//
+// see https://stripe.com/docs/api#list_subscriptions
+func (self *SubscriptionClient) List(customerId string) ([]*Subscription, error) {
+	return self.ListN(customerId, 10, 0)
+}
+
+// Returns a list of the customer's subscriptions at the specified range.
+//
+// see https://stripe.com/docs/api#list_subscriptions
+func (self *SubscriptionClient) ListN(customerId string, count int, offset int) ([]*Subscription, error) {
+	// define a wrapper function for the customer's Subcription List, so that we can
+	// cleanly parse the JSON
+	type listSubscriptionResp struct{ Data []*Subscription }
+	resp := listSubscriptionResp{}
+
+	// add the count and offset to the list of url values
+	values := url.Values{
+		"count":  {strconv.Itoa(count)},
+		"offset": {strconv.Itoa(offset)},
+	}
+
+	err := query("GET", "/v1/customers/" + url.QueryEscape(customerId) + "/subscriptions", values, &resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp.Data, nil
+}
