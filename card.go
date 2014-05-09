@@ -170,3 +170,32 @@ func GetCardType(card string) string {
 
 	return UnknownCard
 }
+
+// Returns a list of the customer's credit cards.
+//
+// see https://stripe.com/docs/api#list_cards
+func (self *CardClient) List(customerId string) ([]*Card, error) {
+	return self.ListN(customerId, 10, 0)
+}
+
+// Returns a list of the customer's credit cards at the specified range.
+//
+// see https://stripe.com/docs/api#list_cards
+func (self *CardClient) ListN(customerId string, count int, offset int) ([]*Card, error) {
+	// define a wrapper function for the customer's Credit Card List, so that we can
+	// cleanly parse the JSON
+	type listCardResp struct{ Data []*Card }
+	resp := listCardResp{}
+
+	// add the count and offset to the list of url values
+	values := url.Values{
+		"count":  {strconv.Itoa(count)},
+		"offset": {strconv.Itoa(offset)},
+	}
+
+	err := query("GET", "/v1/customers/" + url.QueryEscape(customerId) + "/cards", values, &resp)
+	if err != nil {
+		return nil, err
+	}
+	return resp.Data, nil
+}
