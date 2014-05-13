@@ -79,6 +79,9 @@ type CustomerParams struct {
 	// (Optional) The quantity you’d like to apply to the subscription you’re
 	// creating.
 	Quantity int64
+
+	// (Optional) The default card
+	DefaultCard string
 }
 
 // CustomerClient encapsulates operations for creating, updating, deleting and
@@ -185,6 +188,9 @@ func appendCustomerParamsToValues(c *CustomerParams, values *url.Values) {
 	}
 	if c.Quantity != 0 {
 		values.Add("quantity", strconv.FormatInt(c.Quantity, 10))
+	}
+	if c.DefaultCard != "" {
+		values.Add("default_card", c.DefaultCard)
 	}
 
 	// add metadata, if specified

@@ -71,6 +71,10 @@ type CardParams struct {
 	AddressZip string
 }
 
+type CardTokenParams struct {
+	Token string
+}
+
 // CardClient encapsulates operations for creating, updating, deleting and
 // querying cards using the Stripe REST API.
 type CardClient struct{}
@@ -79,6 +83,15 @@ func (self *CardClient) Create(c *CardParams, customerId string) (*Card, error) 
 	card := Card{}
 	values := url.Values{}
 	appendCardParamsToValues(c, &values)
+
+	err := query("POST", "/v1/customers/"+customerId+"/cards", values, &card)
+	return &card, err
+}
+
+func (self *CardClient) CreateByToken(c *CardTokenParams, customerId string) (*Card, error) {
+	card := Card{}
+	values := url.Values{}
+	values.Add("card", c.Token)
 
 	err := query("POST", "/v1/customers/"+customerId+"/cards", values, &card)
 	return &card, err
@@ -193,7 +206,7 @@ func (self *CardClient) ListN(customerId string, count int, offset int) ([]*Card
 		"offset": {strconv.Itoa(offset)},
 	}
 
-	err := query("GET", "/v1/customers/" + url.QueryEscape(customerId) + "/cards", values, &resp)
+	err := query("GET", "/v1/customers/"+url.QueryEscape(customerId)+"/cards", values, &resp)
 	if err != nil {
 		return nil, err
 	}
