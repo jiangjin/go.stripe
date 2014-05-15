@@ -207,6 +207,13 @@ func appendCustomerParamsToValues(c *CustomerParams, values *url.Values) {
 }
 
 func appendCardParamsToValues(c *CardParams, values *url.Values) {
+
+	// If a token is passed, we are using that and not allowing a dictionary.
+	if c.Token != "" {
+		values.Add("card", c.Token)
+		return
+	}
+
 	values.Add("card[number]", c.Number)
 	values.Add("card[exp_month]", strconv.Itoa(c.ExpMonth))
 	values.Add("card[exp_year]", strconv.Itoa(c.ExpYear))
