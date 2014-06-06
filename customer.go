@@ -10,6 +10,7 @@ import (
 // see https://stripe.com/docs/api#customer_object
 type Customer struct {
 	Id           string        `json:"id"`
+	Object       string        `json:"object"`
 	Desc         String        `json:"description,omitempty"`
 	Email        String        `json:"email,omitempty"`
 	Created      int64         `json:"created"`
