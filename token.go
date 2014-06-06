@@ -10,6 +10,7 @@ import (
 // see https://stripe.com/docs/api#token_object
 type Token struct {
 	Id       string `json:"id"`
+	Object   string `json:"object"`
 	Amount   int64  `json:"amount"`
 	Currency string `json:"currency"`
 	Created  int64  `json:"created"`

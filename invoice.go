@@ -12,6 +12,7 @@ import (
 // see https://stripe.com/docs/api#invoice_object
 type Invoice struct {
 	Id              string        `json:"id"`
+	Object          string        `json:"object"`
 	AmountDue       int64         `json:"amount_due"`
 	AttemptCount    int           `json:"attempt_count"`
 	Attempted       bool          `json:"attempted"`

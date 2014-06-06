@@ -11,6 +11,7 @@ import (
 // see https://stripe.com/docs/api#invoiceitem_object
 type InvoiceItem struct {
 	Id       string `json:"id"`
+	Object   string `json:"object"`
 	Amount   int64  `json:"amount"`
 	Currency string `json:"currency"`
 	Customer string `json:"customer"`

@@ -17,6 +17,7 @@ const (
 // see https://stripe.com/docs/api#coupon_object
 type Coupon struct {
 	Id               string `json:"id"`
+	Object           string `json:"object"`
 	Duration         string `json:"duration"`
 	PercentOff       int    `json:"percent_off"`
 	DurationInMonths Int    `json:"duration_in_months,omitempty"`

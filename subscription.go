@@ -18,6 +18,7 @@ const (
 //
 // see https://stripe.com/docs/api#subscription_object
 type Subscription struct {
+	Object             string `json:"object"`
 	Customer           string `json:"customer"`
 	Status             string `json:"status"`
 	Plan               *Plan  `json:"plan"`
@@ -144,7 +145,7 @@ func (self *SubscriptionClient) ListN(customerId string, count int, offset int) 
 		"offset": {strconv.Itoa(offset)},
 	}
 
-	err := query("GET", "/v1/customers/" + url.QueryEscape(customerId) + "/subscriptions", values, &resp)
+	err := query("GET", "/v1/customers/"+url.QueryEscape(customerId)+"/subscriptions", values, &resp)
 	if err != nil {
 		return nil, err
 	}

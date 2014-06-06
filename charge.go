@@ -22,6 +22,7 @@ const (
 // see https://stripe.com/docs/api#charge_object
 type Charge struct {
 	Id                   string        `json:"id"`
+	Object               string        `json:"object"`
 	Desc                 String        `json:"description"`
 	Amount               int64         `json:"amount"`
 	Card                 *Card         `json:"card"`

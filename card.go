@@ -20,6 +20,7 @@ const (
 // Card represents details about a Credit Card entered into Stripe.
 type Card struct {
 	Id                string `json:"id"`
+	Object            string `json:"object"`
 	Name              String `json:"name,omitempty"`
 	Type              string `json:"type"`
 	ExpMonth          int    `json:"exp_month"`

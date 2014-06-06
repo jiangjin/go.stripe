@@ -18,6 +18,7 @@ const (
 // see https://stripe.com/docs/api#plan_object
 type Plan struct {
 	Id              string `json:"id"`
+	Object          string `json:"object"`
 	Name            string `json:"name"`
 	Amount          int64  `json:"amount"`
 	Interval        string `json:"interval"`
