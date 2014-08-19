@@ -11,44 +11,42 @@ import (
 //
 // see https://stripe.com/docs/api#invoice_object
 type Invoice struct {
-	Id              string        `json:"id"`
-	Object          string        `json:"object"`
-	AmountDue       int64         `json:"amount_due"`
-	AttemptCount    int           `json:"attempt_count"`
-	Attempted       bool          `json:"attempted"`
-	Closed          bool          `json:"closed"`
-	Paid            bool          `json:"paid"`
-	PeriodEnd       int64         `json:"period_end"`
-	PeriodStart     int64         `json:"period_start"`
-	Subtotal        int64         `json:"subtotal"`
-	Total           int64         `json:"total"`
-	Charge          String        `json:"charge"`
-	Customer        string        `json:"customer"`
-	Date            int64         `json:"date"`
-	Discount        *Discount     `json:"discount"`
-	Lines           *InvoiceLines `json:"lines"`
-	StartingBalance int64         `json:"starting_balance"`
-	EndingBalance   Int64         `json:"ending_balance"`
-	NextPayment     Int64         `json:"next_payment_attempt"`
-	Livemode        bool          `json:"livemode"`
+	Id                  string        `json:"id"`
+	Object              string        `json:"object"`
+	AmountDue           int64         `json:"amount_due"`
+	AttemptCount        int           `json:"attempt_count"`
+	Attempted           bool          `json:"attempted"`
+	Closed              bool          `json:"closed"`
+	Currency            string        `json:"currency"`
+	Paid                bool          `json:"paid"`
+	PeriodEnd           float64       `json:"period_end"`
+	PeriodStart         int64         `json:"period_start"`
+	Subtotal            int64         `json:"subtotal"`
+	Total               int64         `json:"total"`
+	Forgiven            bool          `json:"forgiven"`
+	ApplicationFee      int64         `json:"application_fee"`
+	Charge              String        `json:"charge"`
+	Customer            string        `json:"customer"`
+	Date                int64         `json:"date"`
+	Desc                string        `json:"description"`
+	Discount            *Discount     `json:"discount"`
+	Lines               *InvoiceLines `json:"lines"`
+	StartingBalance     int64         `json:"starting_balance"`
+	EndingBalance       Int64         `json:"ending_balance"`
+	NextPayment         int64         `json:"next_payment_attempt"`
+	Livemode            bool          `json:"livemode"`
+	StatementDesc       string        `json:"statement_description"`
+	Subsciption         string        `json:"subscription"`
+	WebhooksDeliveredAt int64         `json:"webhooks_delivered_at"`
 }
 
 // InvoiceLines represents an individual line items that is part of an invoice.
 type InvoiceLines struct {
-	InvoiceItems  []*InvoiceItem      `json:"invoiceitems"`
-	Prorations    []*InvoiceItem      `json:"prorations"`
-	Subscriptions []*SubscriptionItem `json:"subscriptions"`
-}
-
-type SubscriptionItem struct {
-	Amount int64   `json:"amount"`
-	Period *Period `json:"period"`
-	Plan   *Plan   `json:"plan"`
-}
-
-type Period struct {
-	Start int64 `json:"start"`
-	End   int64 `json:"end"`
+	Object     string         `json:"object"`
+	Data       []*InvoiceItem `json:"data"`
+	HasMore    bool           `json:"has_more"`
+	Url        string         `json:"url"`
+	TotalCount int64          `json:"total_count"`
 }
 
 // InvoiceClient encapsulates operations for querying invoices using the Stripe
